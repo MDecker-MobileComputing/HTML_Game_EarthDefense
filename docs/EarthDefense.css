@@ -3,45 +3,17 @@ body {
     font-family: sans-serif;
     text-align : center;
     font-size  : 150%;
-    margin     : 5em; 
+    margin     : 5em auto;
 }
 
 #gameArea {
     position        : relative;
+    display         : block;
     width           : 800px;
-    height          : 500px;
+    max-width       : 100%;
+    box-sizing      : border-box;
+    height          : 600px;
     background-color: #3027DA;
     border          : 2px solid darkblue;
     margin          : 0 auto;
-}
-
-#cannon {
-    position        : absolute;
-    bottom          : 0;
-    left            : 50%;
-    transform       : translateX(-50%);
-    width           : 90px;
-    height          : 60px;
-}
-
-#cannonBody {
-    position        : absolute;
-    bottom          : 0;
-    left            : 50%;
-    transform       : translateX(-50%);
-    width           : 60px;
-    height          : 60px;
-    background-color: #666;
-    clip-path      : polygon(50% 0%, 100% 100%, 0% 100%);
-}
-
-#cannonBarrel {
-    position        : absolute;
-    bottom          : 40px;
-    left            : 50%;
-    transform       : translateX(-50%);
-    width           : 90px;
-    height          : 16px;
-    background-color: #555;
-    border-radius  : 8px;
 }
