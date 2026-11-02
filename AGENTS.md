@@ -16,3 +16,4 @@
 ## Code Comments
 
 - Each function in JavaScript must have a block comment in the `/* ... */` format explaining what it does. Do not use single-line comments (`// ...`) for this purpose.
+- Before each block comment there should be two empty lines.

@@ -8,6 +8,10 @@ The game was shipped on [datasette](https://en.wikipedia.org/wiki/Commodore_Data
 
 <br>
 
+Resolution of VIC-20: 176px x 184px ( 22:23 )
+
+<br>
+
 ----
 
 ## License ##
