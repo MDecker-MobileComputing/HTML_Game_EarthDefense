@@ -2,7 +2,7 @@
 
 <br>
 
-https://www.youtube.com/watch?v=Ixpv0aD69rI
+Screencast showing the game (2:30 minutes): https://www.youtube.com/watch?v=Ixpv0aD69rI
 
 The game was shipped on [datasette](https://en.wikipedia.org/wiki/Commodore_Datasette): https://www.ebay.com/itm/126967696665
 
