@@ -1,15 +1,15 @@
 "use strict";
 
-const MOVE_STEP     = 2; // percent of the game area per key press
+const MOVE_STEP       = 2; // percent of the game area per key press
 const DEFENDER_WIDTH  = 40; // width of the defender sprite (triangle) in px
 const DEFENDER_HEIGHT = 50; // height of the defender sprite (triangle) in px
-const SHOT_LENGTH   = 12; // length of a projectile in px
-const SHOT_SPEED    = 6; // projectile movement per animation frame in px
+const SHOT_LENGTH     = 12; // length of a projectile in px
+const SHOT_SPEED      = 6; // projectile movement per animation frame in px
 
 let canvas    = null;
 let context2d = null;
 
-let defenderLeft     = 50; // current horizontal position of the defender in percent of the game area
+let defenderLeft   = 50; // current horizontal position of the defender in percent of the game area
 let shotsArray     = [];
 let animationFrame = null;
 
@@ -97,7 +97,7 @@ function animateShots() {
 
         shot.y -= SHOT_SPEED;
     });
-    shotsArray = shotsArray.filter( function ( shot ) {
+    shotsArray = shotsArray.filter( function ( shot ) { // remove shots that have left the game area
 
         return shot.y + SHOT_LENGTH >= 0;
     });
@@ -116,10 +116,12 @@ function animateShots() {
  */
 function fireShot() {
 
-    shotsArray.push( {
+    const shot = {
         x: ( canvas.width * defenderLeft ) / 100 + DEFENDER_WIDTH / 2,
         y: canvas.height - DEFENDER_HEIGHT
-    } );
+    };
+
+    shotsArray.push( shot );
 
     if ( animationFrame === null ) {
 
@@ -130,6 +132,10 @@ function fireShot() {
 
 /*
  * Moves the defender by the given delta and redraws the game area.
+ *
+ * @param {number} delta - The change in horizontal position (in percent of the game area);
+ *                         positive values move the defender to the right, negative values 
+ *   move it to the left.
  */
 function moveDefender( delta, canvas, ctx ) {
 
@@ -176,7 +182,9 @@ function handleKeydown( event, canvas, ctx ) {
 
         handleControl( "right", canvas, ctx );
 
-    } else if ( event.key === "ArrowUp" || event.code === "Space" || event.key === " " ) {
+    } else if ( event.key  === "ArrowUp" || 
+                event.code === "Space"   || 
+                event.key === " " ) {
 
         event.preventDefault();
 
