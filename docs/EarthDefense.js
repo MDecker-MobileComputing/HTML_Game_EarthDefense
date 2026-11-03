@@ -9,8 +9,8 @@ const SHOT_SPEED    = 6; // projectile movement per animation frame in px
 let canvas    = null;
 let context2d = null;
 
-let cannonLeft = 50; // percent of the game area (canvas width) the cannon base starts at
-let shots      = [];
+let cannonLeft     = 50; // current horizontal position of the cannon in percent of the game area
+let shotsArray     = [];
 let animationFrame = null;
 
 
@@ -55,9 +55,9 @@ function drawCannon( canvas, ctx ) {
 function drawShots( ctx ) {
 
     ctx.strokeStyle = "#fff";
-    ctx.lineWidth = 2;
+    ctx.lineWidth = 4;
 
-    shots.forEach( function ( shot ) {
+    shotsArray.forEach( function ( shot ) {
 
         ctx.beginPath();
         ctx.moveTo( shot.x, shot.y );
@@ -85,18 +85,18 @@ function animateShots() {
 
     animationFrame = null;
 
-    shots.forEach( function ( shot ) {
+    shotsArray.forEach( function ( shot ) {
 
         shot.y -= SHOT_SPEED;
     });
-    shots = shots.filter( function ( shot ) {
+    shotsArray = shotsArray.filter( function ( shot ) {
 
         return shot.y + SHOT_LENGTH >= 0;
     });
 
     redrawGameArea( canvas, context2d );
 
-    if ( shots.length > 0 ) {
+    if ( shotsArray.length > 0 ) {
 
         animationFrame = window.requestAnimationFrame( animateShots );
     }
@@ -108,7 +108,7 @@ function animateShots() {
  */
 function fireShot() {
 
-    shots.push( {
+    shotsArray.push( {
         x: ( canvas.width * cannonLeft ) / 100 + CANNON_WIDTH / 2,
         y: canvas.height - CANNON_HEIGHT
     } );
