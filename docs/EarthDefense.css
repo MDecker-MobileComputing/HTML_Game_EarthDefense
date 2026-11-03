@@ -20,6 +20,20 @@ kbd {
     line-height     : 1.4;
 }
 
+.control-button {
+    padding         : 0;
+    background      : none;
+    border          : 0;
+    font            : inherit;
+    cursor          : pointer;
+    touch-action    : manipulation;
+}
+
+.control-button:focus-visible {
+    outline         : 2px solid currentColor;
+    outline-offset  : 3px;
+}
+
 #gameArea {
     position        : relative;
     display         : block;
