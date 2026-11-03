@@ -5,6 +5,21 @@ body {
     font-size  : 150%;
 }
 
+/* Keyboard key */
+kbd {
+    display         : inline-block;
+    min-width       : 1.4em;
+    padding         : 0.1em 0.4em;
+    color           : #333;
+    background-color: #eee;
+    border          : 1px solid #bbb;
+    border-radius   : 4px;
+    box-shadow      : 0 2px 0 #bbb;
+    font-family     : inherit;
+    font-size       : 0.85em;
+    line-height     : 1.4;
+}
+
 #gameArea {
     position        : relative;
     display         : block;
