@@ -3,8 +3,8 @@
 const MOVE_STEP       = 2; // percent of the game area per key press
 const DEFENDER_WIDTH  = 40; // width of the defender sprite (triangle) in px
 const DEFENDER_HEIGHT = 50; // height of the defender sprite (triangle) in px
-const SHOT_LENGTH     = 12; // length of a projectile in px
-const SHOT_SPEED      = 6; // projectile movement per animation frame in px
+const SHOT_LENGTH     = 12; // length of a shot in px
+const SHOT_SPEED      = 6; // shot movement per animation frame in px
 
 let canvas    = null;
 let context2d = null;
@@ -29,12 +29,17 @@ window.addEventListener( "load", function () {
         handleKeydown( event, canvas, context2d );
     });
 
-    document.querySelectorAll( "[data-control]" ).forEach( function ( control ) {
+    document.querySelectorAll( "[data-control]" )
+            .forEach( function ( control ) {
 
-        control.addEventListener( "click", function ( event ) {
+                control.addEventListener( "click", function ( event ) {
 
-            handleControl( event.currentTarget.dataset.control, canvas, context2d );
-        });
+                    handleControl(
+                        event.currentTarget.dataset.control,
+                        canvas                             ,
+                        context2d
+                    );
+                });
     });
 });
 
@@ -45,7 +50,7 @@ window.addEventListener( "load", function () {
 function drawDefender( canvas, ctx ) {
 
     const baseX = ( canvas.width * defenderLeft ) / 100;
-    const baseY = canvas.height; // base line rests on the bottom of the game area
+    const baseY =   canvas.height; // base line rests on the bottom of the game area
 
     ctx.fillStyle = "#fff"; // pure white
     ctx.beginPath();
@@ -58,12 +63,12 @@ function drawDefender( canvas, ctx ) {
 
 
 /*
- * Draws all active projectiles as short vertical lines.
+ * Draws all active shots as short vertical lines.
  */
 function drawShots( ctx ) {
 
     ctx.strokeStyle = "#fff";
-    ctx.lineWidth = 4;
+    ctx.lineWidth   = 4;
 
     shotsArray.forEach( function ( shot ) {
 
@@ -76,7 +81,7 @@ function drawShots( ctx ) {
 
 
 /*
- * Clears the game area and redraws the defender and active projectiles.
+ * Clears the game area and redraws the defender and active shots.
  */
 function redrawGameArea( canvas, ctx ) {
 
@@ -87,7 +92,7 @@ function redrawGameArea( canvas, ctx ) {
 
 
 /*
- * Advances projectiles until they leave the top of the game area.
+ * Advances shots until they leave the top of the game area.
  */
 function animateShots() {
 
@@ -112,13 +117,13 @@ function animateShots() {
 
 
 /*
- * Fires a projectile from the defender's tip at its current horizontal position.
+ * Fires a shot from the defender's tip at its current horizontal position.
  */
 function fireShot() {
 
     const shot = {
         x: ( canvas.width * defenderLeft ) / 100 + DEFENDER_WIDTH / 2,
-        y: canvas.height - DEFENDER_HEIGHT
+        y:   canvas.height - DEFENDER_HEIGHT
     };
 
     shotsArray.push( shot );
@@ -134,7 +139,7 @@ function fireShot() {
  * Moves the defender by the given delta and redraws the game area.
  *
  * @param {number} delta - The change in horizontal position (in percent of the game area);
- *                         positive values move the defender to the right, negative values 
+ *                         positive values move the defender to the right, negative values
  *   move it to the left.
  */
 function moveDefender( delta, canvas, ctx ) {
@@ -182,8 +187,8 @@ function handleKeydown( event, canvas, ctx ) {
 
         handleControl( "right", canvas, ctx );
 
-    } else if ( event.key  === "ArrowUp" || 
-                event.code === "Space"   || 
+    } else if ( event.key  === "ArrowUp" ||
+                event.code === "Space"   ||
                 event.key === " " ) {
 
         event.preventDefault();
