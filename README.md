@@ -9,6 +9,10 @@ The game was shipped on [datasette](https://en.wikipedia.org/wiki/Commodore_Data
 
 <br>
 
+Play the game online: [Earth Defense](https://mdecker-mobilecomputing.github.io/HTML_Game_EarthDefense/).
+
+<br>
+
 Resolution of VIC-20's video chip: 176x184 pixels (aspect ratio: 22:23)
 
 <br>
