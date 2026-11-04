@@ -1,10 +1,11 @@
 "use strict";
 
-const MOVE_STEP       = 2; // percent of the game area per key press
-const DEFENDER_WIDTH  = 40; // width of the defender sprite (triangle) in px
-const DEFENDER_HEIGHT = 50; // height of the defender sprite (triangle) in px
+const DEFENDER_MOVE_STEP =  2; // percent of the game area per key press
+const DEFENDER_WIDTH     = 40; // width of the defender sprite (triangle) in px
+const DEFENDER_HEIGHT    = 50; // height of the defender sprite (triangle) in px
+
 const SHOT_LENGTH     = 12; // length of a shot in px
-const SHOT_SPEED      = 6; // shot movement per animation frame in px
+const SHOT_SPEED      = 6;  // shot movement per animation frame in px
 
 let canvas    = null;
 let context2d = null;
@@ -32,16 +33,31 @@ window.addEventListener( "load", function () {
     document.querySelectorAll( "[data-control]" )
             .forEach( function ( control ) {
 
-                control.addEventListener( "click", function ( event ) {
-
-                    handleControl(
-                        event.currentTarget.dataset.control,
-                        canvas                             ,
-                        context2d
-                    );
-                });
+                control.addEventListener( "click", handleControlClick );
     });
 });
+
+
+/*
+ * Handles clicks on the on-screen controls for moving the defender and firing shots.
+ */
+function handleControlClick( event ) {
+
+    const control = event.currentTarget.dataset.control;
+
+    performUserAction( control, canvas, context2d );
+}
+
+
+/*
+ * Clears the game area and redraws the defender and active shots.
+ */
+function redrawGameArea( canvas, ctx ) {
+
+    ctx.clearRect( 0, 0, canvas.width, canvas.height );
+    drawDefender( canvas, ctx );
+    drawShots( ctx );
+}
 
 
 /*
@@ -81,13 +97,21 @@ function drawShots( ctx ) {
 
 
 /*
- * Clears the game area and redraws the defender and active shots.
+ * Fires a shot from the defender's tip at its current horizontal position.
  */
-function redrawGameArea( canvas, ctx ) {
+function fireShot() {
 
-    ctx.clearRect( 0, 0, canvas.width, canvas.height );
-    drawDefender( canvas, ctx );
-    drawShots( ctx );
+    const shot = {
+        x: ( canvas.width * defenderLeft ) / 100 + DEFENDER_WIDTH / 2,
+        y:   canvas.height - DEFENDER_HEIGHT
+    };
+
+    shotsArray.push( shot );
+
+    if ( animationFrame === null ) {
+
+        animationFrame = window.requestAnimationFrame( animateShots );
+    }
 }
 
 
@@ -111,26 +135,8 @@ function animateShots() {
 
     if ( shotsArray.length > 0 ) {
 
-        animationFrame = window.requestAnimationFrame( animateShots );
-    }
-}
-
-
-/*
- * Fires a shot from the defender's tip at its current horizontal position.
- */
-function fireShot() {
-
-    const shot = {
-        x: ( canvas.width * defenderLeft ) / 100 + DEFENDER_WIDTH / 2,
-        y:   canvas.height - DEFENDER_HEIGHT
-    };
-
-    shotsArray.push( shot );
-
-    if ( animationFrame === null ) {
-
-        animationFrame = window.requestAnimationFrame( animateShots );
+        animationFrame =
+            window.requestAnimationFrame( animateShots );
     }
 }
 
@@ -151,26 +157,6 @@ function moveDefender( delta, canvas, ctx ) {
 
 
 /*
- * Executes a control action from either a keyboard key or a tapped button.
- */
-function handleControl( control, canvas, ctx ) {
-
-    if ( control === "left" ) {
-
-        moveDefender( -MOVE_STEP, canvas, ctx );
-
-    } else if ( control === "right" ) {
-
-        moveDefender( MOVE_STEP, canvas, ctx );
-
-    } else if ( control === "fire" ) {
-
-        fireShot();
-    }
-}
-
-
-/*
  * Handles keyboard events and moves the defender accordingly.
  */
 function handleKeydown( event, canvas, ctx ) {
@@ -179,20 +165,41 @@ function handleKeydown( event, canvas, ctx ) {
 
         event.preventDefault();
 
-        handleControl( "left", canvas, ctx );
+        performUserAction( "left", canvas, ctx );
 
     } else if ( event.key === "ArrowRight" ) {
 
         event.preventDefault();
 
-        handleControl( "right", canvas, ctx );
+        performUserAction( "right", canvas, ctx );
 
     } else if ( event.key  === "ArrowUp" ||
                 event.code === "Space"   ||
-                event.key === " " ) {
+                event.key === " "
+              ) {
 
         event.preventDefault();
 
-        handleControl( "fire", canvas, ctx );
+        performUserAction( "fire", canvas, ctx );
+    }
+}
+
+
+/*
+ * Executes a control action from either a keyboard key or a tapped button.
+ */
+function performUserAction( control, canvas, ctx ) {
+
+    if ( control === "left" ) {
+
+        moveDefender( -DEFENDER_MOVE_STEP, canvas, ctx );
+
+    } else if ( control === "right" ) {
+
+        moveDefender( DEFENDER_MOVE_STEP, canvas, ctx );
+
+    } else if ( control === "fire" ) {
+
+        fireShot();
     }
 }
