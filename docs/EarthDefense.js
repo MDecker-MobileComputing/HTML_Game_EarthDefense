@@ -4,15 +4,17 @@ const DEFENDER_MOVE_STEP =  2; // percent of the game area per key press
 const DEFENDER_WIDTH     = 40; // width of the defender sprite (triangle) in px
 const DEFENDER_HEIGHT    = 50; // height of the defender sprite (triangle) in px
 
-const SHOT_LENGTH     = 12; // length of a shot in px
-const SHOT_SPEED      = 6;  // shot movement per animation frame in px
+const SHOT_LENGTH     = 12;  // length of a shot in px
+const SHOT_SPEED      = 360; // shot movement per second in px
 
 let canvas    = null;
 let context2d = null;
 
 let defenderLeft   = 50; // current horizontal position of the defender in percent of the game area
 let shotsArray     = [];
-let animationFrame = null;
+
+let animationFrame    = null;
+let lastAnimationTime = null;
 
 
 /*
@@ -118,13 +120,18 @@ function fireShot() {
 /*
  * Advances shots until they leave the top of the game area.
  */
-function animateShots() {
+function animateShots( timestamp ) {
 
     animationFrame = null;
 
+    const elapsedTime = lastAnimationTime === null
+        ? 0
+        : ( timestamp - lastAnimationTime ) / 1000;
+    lastAnimationTime = timestamp;
+
     shotsArray.forEach( function ( shot ) {
 
-        shot.y -= SHOT_SPEED;
+        shot.y -= SHOT_SPEED * elapsedTime;
     });
     shotsArray = shotsArray.filter( function ( shot ) { // remove shots that have left the game area
 
@@ -137,6 +144,9 @@ function animateShots() {
 
         animationFrame =
             window.requestAnimationFrame( animateShots );
+    } else {
+
+        lastAnimationTime = null;
     }
 }
 
