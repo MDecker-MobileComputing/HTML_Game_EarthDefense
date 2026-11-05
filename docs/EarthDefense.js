@@ -10,8 +10,15 @@ const SHOT_SPEED      = 360; // shot movement per second in px
 let canvas    = null;
 let context2d = null;
 
-let defenderLeft   = 50; // current horizontal position of the defender in percent of the game area
-let shotsArray     = [];
+let defenderLeft = 50; // current horizontal position of the defender in percent of the game area
+let shotsArray  = [];
+
+const ALIEN_SHIP_RADIUS = 15; // radius of an alien ship (ball) in px
+
+const ALIEN_SHIP_SPEED  = 20; // alien ship movement per second in px
+
+let alienShipArray = []; // current coordinates of the alien ships
+let gameOver       = false;
 
 let animationFrame    = null;
 let lastAnimationTime = null;
@@ -25,7 +32,10 @@ window.addEventListener( "load", function () {
     canvas    = document.getElementById( "gameArea" );
     context2d = canvas.getContext( "2d" );
 
+    initAlienShips( canvas );
     redrawGameArea( canvas, context2d );
+
+    animationFrame = window.requestAnimationFrame( gameLoop );
 
     document.addEventListener( "keydown", function ( event ) {
 
@@ -57,8 +67,42 @@ function handleControlClick( event ) {
 function redrawGameArea( canvas, ctx ) {
 
     ctx.clearRect( 0, 0, canvas.width, canvas.height );
+    drawAlienShips( ctx );
     drawDefender( canvas, ctx );
     drawShots( ctx );
+}
+
+
+/*
+ * Creates three alien ships, evenly distributed horizontally near the top of the game area.
+ */
+function initAlienShips( canvas ) {
+
+    alienShipArray = [];
+
+    for ( let i = 1; i <= 3; i++ ) {
+
+        alienShipArray.push({
+            x: canvas.width * i / 4,
+            y: ALIEN_SHIP_RADIUS * 2
+        });
+    }
+}
+
+
+/*
+ * Draws all alien ships as filled balls.
+ */
+function drawAlienShips( ctx ) {
+
+    ctx.fillStyle = "#fff";
+
+    alienShipArray.forEach( function ( ship ) {
+
+        ctx.beginPath();
+        ctx.arc( ship.x, ship.y, ALIEN_SHIP_RADIUS, 0, Math.PI * 2 );
+        ctx.fill();
+    });
 }
 
 
@@ -109,20 +153,13 @@ function fireShot() {
     };
 
     shotsArray.push( shot );
-
-    if ( animationFrame === null ) {
-
-        animationFrame = window.requestAnimationFrame( animateShots );
-    }
 }
 
 
 /*
- * Advances shots until they leave the top of the game area.
+ * Game loop: advances shots and alien ships, and ends the game when an alien ship touches the ground.
  */
-function animateShots( timestamp ) {
-
-    animationFrame = null;
+function gameLoop( timestamp ) {
 
     const elapsedTime = lastAnimationTime === null
         ? 0
@@ -138,16 +175,39 @@ function animateShots( timestamp ) {
         return shot.y + SHOT_LENGTH >= 0;
     });
 
+    alienShipArray.forEach( function ( ship ) {
+
+        ship.y += ALIEN_SHIP_SPEED * elapsedTime;
+
+        if ( ship.y + ALIEN_SHIP_RADIUS >= canvas.height ) {
+
+            gameOver = true;
+        }
+    });
+
     redrawGameArea( canvas, context2d );
 
-    if ( shotsArray.length > 0 ) {
+    if ( gameOver ) {
 
-        animationFrame =
-            window.requestAnimationFrame( animateShots );
+        drawGameOver( canvas, context2d );
+
     } else {
 
-        lastAnimationTime = null;
+        animationFrame = window.requestAnimationFrame( gameLoop );
     }
+}
+
+
+/*
+ * Draws the red "Game Over" message in the center of the game area.
+ */
+function drawGameOver( canvas, ctx ) {
+
+    ctx.fillStyle    = "#f00";
+    ctx.font         = "bold 48px sans-serif";
+    ctx.textAlign    = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText( "Game Over", canvas.width / 2, canvas.height / 2 );
 }
 
 
@@ -199,6 +259,11 @@ function handleKeydown( event, canvas, ctx ) {
  * Executes a control action from either a keyboard key or a tapped button.
  */
 function performUserAction( control, canvas, ctx ) {
+
+    if ( gameOver ) {
+
+        return;
+    }
 
     if ( control === "left" ) {
 
