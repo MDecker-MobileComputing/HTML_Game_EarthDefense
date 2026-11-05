@@ -8,6 +8,9 @@ game [Earth Defense](https://www.uvlist.net/game-223675-Earth+Defense) for the
 you can try out the game directly using the link provided below.
 The implementation uses only HTML, JavaScript, and CSS, with no external libraries.
 It is a very simple game, because the VIC-20 had very few resources.
+The game was developed by Commodore itself and shipped on
+[datasette](https://en.wikipedia.org/wiki/Commodore_Datasette) (see
+[here](https://www.ebay.de/itm/126967696665?srsltid=AYCX9vLZ1zM4xQxiBNw2h6OaSBtp6dXc5VGUR7omsu6jWnYaACuhlFR_)).
 
 <br>
 
@@ -20,23 +23,9 @@ https://www.youtube.com/watch?v=Ixpv0aD69rI
 
 <br>
 
-----
-
-## Technical Details ##
+The [wiki belonging to this repository](../../wiki) also contains some information.
 
 <br>
-
-Resolution of VIC-20's video chip: 176x184 pixels (aspect ratio: 22:23)
-
-<br>
-
-In German-speaking countries, the home computer *Commodore VIC-20* was sold under the name "VC-20".
-
-<br>
-
-The game was developed by Commodore itself and shipped on
-[datasette](https://en.wikipedia.org/wiki/Commodore_Datasette) (see
-[here](https://www.ebay.de/itm/126967696665?srsltid=AYCX9vLZ1zM4xQxiBNw2h6OaSBtp6dXc5VGUR7omsu6jWnYaACuhlFR_)).
 
 ----
 
