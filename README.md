@@ -7,6 +7,9 @@ game [Earth Defense](https://www.uvlist.net/game-223675-Earth+Defense) for the
 [Commodore VIC-20](https://en.wikipedia.org/wiki/VIC-20) home computer;
 you can try out the game directly using the link provided below.
 The implementation uses only HTML, JavaScript, and CSS, with no external libraries.
+It is a very simple game, because the VIC-20 had very few resources.
+
+<br>
 
 Play the game online: [Earth Defense](https://mdecker-mobilecomputing.github.io/HTML_Game_EarthDefense/) (served by *GitHub Page*)
 
