@@ -4,6 +4,9 @@ const DEFENDER_MOVE_STEP =  2; // percent of the game area per key press
 const DEFENDER_WIDTH     = 40; // width of the defender sprite (triangle) in px
 const DEFENDER_HEIGHT    = 50; // height of the defender sprite (triangle) in px
 
+const ALIEN_SHIP_RADIUS = 15; // radius of an alien ship (ball) in px
+const ALIEN_SHIP_SPEED  = 20; // alien ship movement per second in px
+
 const SHOT_LENGTH = 12;  // length of a shot in px
 const SHOT_SPEED  = 360; // shot movement per second in px
 
@@ -12,16 +15,14 @@ let context2d = null;
 
 let defenderLeft = 50; // current horizontal position of the defender in percent of the game area
 
-const ALIEN_SHIP_RADIUS = 15; // radius of an alien ship (ball) in px
-const ALIEN_SHIP_SPEED  = 20; // alien ship movement per second in px
-
-let gameOver = false;
-
 let animationFrame    = null;
 let lastAnimationTime = null;
 
-let shotsArray  = [];
+let shotsArray     = [];
 let alienShipArray = [];
+
+let gameOver = false;
+
 
 /*
  * Registers the game area canvas and starts the game loop when the window has loaded.
