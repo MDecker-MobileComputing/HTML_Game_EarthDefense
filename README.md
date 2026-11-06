@@ -1,25 +1,16 @@
-# Earth Defence (Game for Commodore VIC-20 from year 1982) #
+# Earth Defence #
 
 <br>
 
-This repository contains the source code for a web app that implements the 1982 computer
-game [Earth Defense](https://www.uvlist.net/game-223675-Earth+Defense) for the
-[Commodore VIC-20](https://en.wikipedia.org/wiki/VIC-20) home computer;
+This repository contains the source code for a web app that implements a simple browser game;
 you can try out the game directly using the link provided below.
 The implementation uses only HTML, JavaScript, and CSS, with no external libraries.
 It is a very simple game, because the VIC-20 had very few resources.
-The game was developed by Commodore itself and shipped on
-[datasette](https://en.wikipedia.org/wiki/Commodore_Datasette) (see
-[here](https://www.ebay.de/itm/126967696665?srsltid=AYCX9vLZ1zM4xQxiBNw2h6OaSBtp6dXc5VGUR7omsu6jWnYaACuhlFR_)).
 
 <br>
 
-Play the game online: [Earth Defense](https://mdecker-mobilecomputing.github.io/HTML_Game_EarthDefense/) (served by *GitHub Page*)
-
-<br>
-
-Short video (2:30 minutes) showing the original game:
-https://www.youtube.com/watch?v=Ixpv0aD69rI
+Play the game online: [Earth Defense](https://mdecker-mobilecomputing.github.io/HTML_Game_EarthDefense/)
+(served by *GitHub Page*)
 
 <br>
 
