@@ -118,8 +118,8 @@ function drawDefender( canvas, ctx ) {
 
     ctx.fillStyle = "#fff"; // pure white
     ctx.beginPath();
-    ctx.moveTo( baseX, baseY );
-    ctx.lineTo( baseX + DEFENDER_WIDTH, baseY );
+    ctx.moveTo( baseX                     , baseY                   );
+    ctx.lineTo( baseX + DEFENDER_WIDTH    , baseY                   );
     ctx.lineTo( baseX + DEFENDER_WIDTH / 2, baseY - DEFENDER_HEIGHT );
     ctx.closePath();
     ctx.fill();
