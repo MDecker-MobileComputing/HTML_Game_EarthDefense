@@ -242,7 +242,7 @@ function gameLoop( timestamp ) {
 
 
 /*
- * Draws the red "Game Over" message in the center of the game area.
+ * Draws the game-over message and restart instruction in the center of the game area.
  */
 function drawGameOver( canvas, ctx ) {
 
@@ -251,6 +251,26 @@ function drawGameOver( canvas, ctx ) {
     ctx.textAlign    = "center";
     ctx.textBaseline = "middle";
     ctx.fillText( "Game Over", canvas.width / 2, canvas.height / 2 );
+
+    ctx.fillStyle = "#fff";
+    ctx.font      = "20px sans-serif";
+    ctx.fillText( "Press SPACE to play another round", canvas.width / 2, canvas.height / 2 + 56 );
+}
+
+
+/*
+ * Resets the game state and starts a new round.
+ */
+function restartGame( canvas, ctx ) {
+
+    defenderLeft      = 50;
+    shotsArray        = [];
+    lastAnimationTime = null;
+    gameOver          = false;
+
+    initAlienShips( canvas );
+    redrawGameArea( canvas, ctx );
+    animationFrame = window.requestAnimationFrame( gameLoop );
 }
 
 
@@ -286,14 +306,24 @@ function handleKeydown( event, canvas, ctx ) {
 
         performUserAction( "right", canvas, ctx );
 
-    } else if ( event.key  === "ArrowUp" ||
-                event.code === "Space"   ||
-                event.key === " "
-              ) {
+    } else if ( event.key === "ArrowUp" ) {
 
         event.preventDefault();
 
         performUserAction( "fire", canvas, ctx );
+
+    } else if ( event.code === "Space" || event.key === " " ) {
+
+        event.preventDefault();
+
+        if ( gameOver ) {
+
+            restartGame( canvas, ctx );
+
+        } else {
+
+            performUserAction( "fire", canvas, ctx );
+        }
     }
 }
 
