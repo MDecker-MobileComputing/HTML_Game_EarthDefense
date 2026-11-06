@@ -159,6 +159,42 @@ function fireShot() {
 
 
 /*
+ * Removes shots that hit an alien ship and respawns each hit ship above the canvas.
+ */
+function handleShotHits( canvas ) {
+
+    shotsArray = shotsArray.filter( function ( shot ) {
+
+        const hitShip = alienShipArray.find( function ( ship ) {
+
+            return shot.x >= ship.x - ALIEN_SHIP_RADIUS &&
+                   shot.x <= ship.x + ALIEN_SHIP_RADIUS &&
+                   shot.y <= ship.y + ALIEN_SHIP_RADIUS &&
+                   shot.y + SHOT_LENGTH >= ship.y - ALIEN_SHIP_RADIUS;
+        });
+
+        if ( hitShip === undefined ) {
+
+            return true;
+        }
+
+        let newX = hitShip.x;
+
+        while ( newX === hitShip.x ) {
+
+            newX = ALIEN_SHIP_RADIUS +
+                   Math.random() * ( canvas.width - 2 * ALIEN_SHIP_RADIUS );
+        }
+
+        hitShip.x = newX;
+        hitShip.y = -2 * ALIEN_SHIP_RADIUS;
+
+        return false;
+    });
+}
+
+
+/*
  * Game loop: advances shots and alien ships, and ends the game when an alien ship touches the ground.
  */
 function gameLoop( timestamp ) {
@@ -180,6 +216,11 @@ function gameLoop( timestamp ) {
     alienShipArray.forEach( function ( ship ) {
 
         ship.y += ALIEN_SHIP_SPEED * elapsedTime;
+    });
+
+    handleShotHits( canvas );
+
+    alienShipArray.forEach( function ( ship ) {
 
         if ( ship.y + ALIEN_SHIP_RADIUS >= canvas.height ) {
 
