@@ -1,13 +1,13 @@
 "use strict";
 
 const DEFENDER_MOVE_STEP =  2; // percent of the game area per key press
-const DEFENDER_WIDTH     = 40; // width of the defender sprite (triangle) in px
+const DEFENDER_WIDTH     = 40; // width  of the defender sprite (triangle) in px
 const DEFENDER_HEIGHT    = 50; // height of the defender sprite (triangle) in px
 
 const ALIEN_SHIP_RADIUS = 15; // radius of an alien ship (ball) in px
 const ALIEN_SHIP_SPEED  = 20; // alien ship movement per second in px
 
-const SHOT_LENGTH = 12;  // length of a shot in px
+const SHOT_LENGTH =  12; // length of a shot in px
 const SHOT_SPEED  = 360; // shot movement per second in px
 
 let canvas    = null;
@@ -82,10 +82,12 @@ function initAlienShips( canvas ) {
 
     for ( let i = 1; i <= 3; i++ ) {
 
-        alienShipArray.push({
-            x: canvas.width * i / 4,
+        const alienShip = {
+            x: canvas.width      * i / 4,
             y: ALIEN_SHIP_RADIUS * 2
-        });
+        };
+
+        alienShipArray.push( alienShip );
     }
 }
 
