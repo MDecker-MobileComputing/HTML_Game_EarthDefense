@@ -5,6 +5,10 @@ body {
     font-size  : 150%;
 }
 
+body > p:first-of-type {
+    margin-bottom: 2em;
+}
+
 /* Keyboard key */
 kbd {
     display         : inline-block;
