@@ -6,6 +6,7 @@ const DEFENDER_HEIGHT    = 50; // height of the defender sprite (triangle) in px
 
 const ALIEN_SHIP_RADIUS = 15; // radius of an alien ship (ball) in px
 const ALIEN_SHIP_SPEED  = 20; // alien ship movement per second in px
+const ALIEN_SHIP_ACCELERATION = 1; // increase in alien ship speed per second squared in px
 
 const SHOT_LENGTH =  12; // length of a shot in px
 const SHOT_SPEED  = 360; // shot movement per second in px
@@ -17,6 +18,7 @@ let defenderLeft = 50; // current horizontal position of the defender in percent
 
 let animationFrame    = null;
 let lastAnimationTime = null;
+let alienShipSpeed    = ALIEN_SHIP_SPEED;
 
 let shotsArray     = [];
 let alienShipArray = [];
@@ -203,6 +205,7 @@ function gameLoop( timestamp ) {
         ? 0
         : ( timestamp - lastAnimationTime ) / 1000;
     lastAnimationTime = timestamp;
+    alienShipSpeed += ALIEN_SHIP_ACCELERATION * elapsedTime;
 
     shotsArray.forEach( function ( shot ) {
 
@@ -215,7 +218,7 @@ function gameLoop( timestamp ) {
 
     alienShipArray.forEach( function ( ship ) {
 
-        ship.y += ALIEN_SHIP_SPEED * elapsedTime;
+        ship.y += alienShipSpeed * elapsedTime;
     });
 
     handleShotHits( canvas );
@@ -266,6 +269,7 @@ function restartGame( canvas, ctx ) {
     defenderLeft      = 50;
     shotsArray        = [];
     lastAnimationTime = null;
+    alienShipSpeed    = ALIEN_SHIP_SPEED;
     gameOver          = false;
 
     initAlienShips( canvas );
