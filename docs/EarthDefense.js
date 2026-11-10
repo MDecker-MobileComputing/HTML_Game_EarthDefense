@@ -13,6 +13,8 @@ const SHOT_SPEED  = 360; // shot movement per second in px
 
 let canvas    = null;
 let context2d = null;
+let aliensShotDownDisplay = null;
+let aliensShotDown = 0;
 
 let defenderLeft = 50; // current horizontal position of the defender in percent of the game area
 
@@ -33,6 +35,7 @@ window.addEventListener( "load", function () {
 
     canvas    = document.getElementById( "gameArea" );
     context2d = canvas.getContext( "2d" );
+    aliensShotDownDisplay = document.getElementById( "aliensShotDown" );
 
     initAlienShips( canvas );
     redrawGameArea( canvas, context2d );
@@ -180,6 +183,9 @@ function handleShotHits( canvas ) {
             return true;
         }
 
+        aliensShotDown++;
+        aliensShotDownDisplay.textContent = aliensShotDown;
+
         let newX = hitShip.x;
 
         while ( newX === hitShip.x ) {
@@ -271,6 +277,8 @@ function restartGame( canvas, ctx ) {
     lastAnimationTime = null;
     alienShipSpeed    = ALIEN_SHIP_SPEED;
     gameOver          = false;
+    aliensShotDown    = 0;
+    aliensShotDownDisplay.textContent = aliensShotDown;
 
     initAlienShips( canvas );
     redrawGameArea( canvas, ctx );

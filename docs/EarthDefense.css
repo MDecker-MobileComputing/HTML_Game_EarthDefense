@@ -49,3 +49,16 @@ kbd {
     border          : 2px solid darkblue;
     margin          : 0 auto;
 }
+
+.game-layout {
+    width           : 800px;
+    max-width       : 100%;
+    margin          : 0 auto;
+}
+
+.score-panel {
+    padding         : 0.35em;
+    margin-bottom   : 0.5em;
+    font-size       : 0.8em;
+    text-align      : center;
+}

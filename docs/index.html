@@ -17,9 +17,14 @@
       The game ends when the aliens reach the bottom of the screen.
     </p>
 
-    <canvas id="gameArea" width="800" height="600">
-      Error: Canvas element not supported by your browser.
-    </canvas>
+    <div class="game-layout">
+      <aside class="score-panel" aria-live="polite">
+        Aliens shot down: <span id="aliensShotDown">0</span>
+      </aside>
+      <canvas id="gameArea" width="800" height="600">
+        Error: Canvas element not supported by your browser.
+      </canvas>
+    </div>
 
     <p>
       Use the
