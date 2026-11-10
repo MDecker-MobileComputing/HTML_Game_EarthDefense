@@ -291,7 +291,7 @@ function restartGame( canvas, ctx ) {
  *
  * @param {number} delta - The change in horizontal position (in percent of the game area);
  *                         positive values move the defender to the right, negative values
- *   move it to the left.
+ *                         move it to the left.
  */
 function moveDefender( delta, canvas, ctx ) {
 
