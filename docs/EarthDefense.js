@@ -1,8 +1,9 @@
 "use strict";
 
 const DEFENDER_MOVE_STEP =  2; // percent of the game area per key press
-const DEFENDER_WIDTH     = 40; // width  of the defender sprite (triangle) in px
-const DEFENDER_HEIGHT    = 50; // height of the defender sprite (triangle) in px
+const DEFENDER_WIDTH     = 45; // width  of the defender sprite (triangle) in px
+const DEFENDER_HEIGHT    = 15; // height of the defender sprite (triangle) in px
+const CANNON_LENGTH      = 10; // length of the cannon (vertical line) in px
 
 const ALIEN_SHIP_RADIUS = 15; // radius of an alien ship (ball) in px
 const ALIEN_SHIP_SPEED  = 20; // alien ship movement per second in px
@@ -33,8 +34,8 @@ let gameOver = false;
  */
 window.addEventListener( "load", function () {
 
-    canvas    = document.getElementById( "gameArea" );
-    context2d = canvas.getContext( "2d" );
+    canvas                = document.getElementById( "gameArea" );
+    context2d             = canvas.getContext( "2d" );
     aliensShotDownDisplay = document.getElementById( "aliensShotDown" );
 
     initAlienShips( canvas );
@@ -120,14 +121,25 @@ function drawDefender( canvas, ctx ) {
 
     const baseX = ( canvas.width * defenderLeft ) / 100;
     const baseY =   canvas.height; // base line rests on the bottom of the game area
+    const cannonX = baseX + DEFENDER_WIDTH / 2; // center of the cannon
 
     ctx.fillStyle = "#fff"; // pure white
+
+    /* Draw the flat triangle body */
     ctx.beginPath();
     ctx.moveTo( baseX                     , baseY                   );
     ctx.lineTo( baseX + DEFENDER_WIDTH    , baseY                   );
     ctx.lineTo( baseX + DEFENDER_WIDTH / 2, baseY - DEFENDER_HEIGHT );
     ctx.closePath();
     ctx.fill();
+
+    /* Draw the cannon as a vertical line at the top */
+    ctx.strokeStyle = "#fff";
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo( cannonX, baseY - DEFENDER_HEIGHT + 3 );
+    ctx.lineTo( cannonX, baseY - DEFENDER_HEIGHT - CANNON_LENGTH );
+    ctx.stroke();
 }
 
 
